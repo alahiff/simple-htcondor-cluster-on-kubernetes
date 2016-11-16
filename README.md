@@ -1,1 +1,1 @@
-# simple-htcondor-cluster-on-kubernetes
+# A simple HTCondor cluster on Kubernetes
