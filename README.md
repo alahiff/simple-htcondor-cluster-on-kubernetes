@@ -1,6 +1,6 @@
 # A simple HTCondor cluster on Kubernetes
 ## Setting up the cluster
-Create a random pool password with name `password` in the `/tmp` directory:
+Create a random pool password with filename `password` in the `/tmp` directory:
 ```
 docker run -it -v /tmp:/vol alahiff/htcondor-generate-password:latest
 ```
