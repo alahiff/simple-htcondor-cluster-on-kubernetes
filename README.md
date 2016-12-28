@@ -108,6 +108,9 @@ DaemonMaster       None               htcondor-central-manager-2538661822-g3ngm
 Negotiator         None               htcondor-central-manager-2538661822-g3ngm
 Scheduler          None               htcondor-schedd-308862252-r6xkj
 DaemonMaster       None               htcondor-schedd-308862252-r6xkj
+DaemonMaster       None               htcondor-worker-123133369-lc41z
+Machine            Job                slot1@htcondor-worker-123133369-lc41z
+Machine            Job                slot2@htcondor-worker-123133369-lc41z
 DaemonMaster       None               htcondor-worker-123133369-tdb70
 Machine            Job                slot1@htcondor-worker-123133369-tdb70
 Machine            Job                slot2@htcondor-worker-123133369-tdb70
