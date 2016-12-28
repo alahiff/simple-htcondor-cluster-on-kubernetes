@@ -74,7 +74,7 @@ Try killing the central manager:
 # kubectl delete pod htcondor-central-manager-2538661822-1q8pl
 pod "htcondor-central-manager-2538661822-1q8pl" deleted
 ```
-You should then see that a new central manager pod is being created:
+A new central manager pod will automatically be created:
 ```
 # kubectl get deployments,pods
 NAME                              DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
