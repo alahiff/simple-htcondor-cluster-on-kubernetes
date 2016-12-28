@@ -1,0 +1,5 @@
+DAEMON_LIST = MASTER, STARTD
+
+# Disable preemption
+PREEMPT=FALSE
+RANK=0
