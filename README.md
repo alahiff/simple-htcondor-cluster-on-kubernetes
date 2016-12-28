@@ -35,7 +35,7 @@ htcondor-schedd-308862252-r6xkj             1/1       Running   0          16h
 htcondor-worker-123133369-tdb70             1/1       Running   0          16h
 ```
 
-Check that all HTCondor components are working correctly:
+Check that all HTCondor components (collector, negotiator, schedd, and startd) are working correctly:
 ```
 # kubectl exec htcondor-central-manager-2538661822-1q8pl -i -t -- condor_status -any
 MyType             TargetType         Name
