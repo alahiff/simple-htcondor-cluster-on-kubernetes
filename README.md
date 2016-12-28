@@ -69,3 +69,47 @@ slot2@htcondor-wor LINUX      X86_64 Unclaimed Idle      0.000 1895  0+16:25:07
 
                Total        4     0       0         4       0          0
 ```
+Try killing the central manager:
+```
+# kubectl delete pod htcondor-central-manager-2538661822-1q8pl
+pod "htcondor-central-manager-2538661822-1q8pl" deleted
+```
+You should then see that a new central manager pod is being created:
+```
+# kubectl get deployments,pods
+NAME                              DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
+deploy/htcondor-central-manager   1         1         1            0           18h
+deploy/htcondor-schedd            1         1         1            1           16h
+deploy/htcondor-worker            2         2         2            2           16h
+
+NAME                                           READY     STATUS              RESTARTS   AGE
+po/htcondor-central-manager-2538661822-1q8pl   1/1       Terminating         0          18h
+po/htcondor-central-manager-2538661822-g3ngm   0/1       ContainerCreating   0          5s
+po/htcondor-schedd-308862252-r6xkj             1/1       Running             0          16h
+po/htcondor-worker-123133369-lc41z             1/1       Running             0          30m
+po/htcondor-worker-123133369-tdb70             1/1       Running             0          16h
+```
+Initially the new central manager won't know about the schedd or worker nodes:
+```
+# kubectl exec htcondor-central-manager-2538661822-g3ngm -i -t -- condor_status -any
+MyType             TargetType         Name
+
+Collector          None               My Pool - htcondor-central-manager-253866
+DaemonMaster       None               htcondor-central-manager-2538661822-g3ngm
+Negotiator         None               htcondor-central-manager-2538661822-g3ngm
+```
+but after a while the schedd and worker node(s) will update the new central manager:
+```
+# kubectl exec htcondor-central-manager-2538661822-g3ngm -i -t -- condor_status -any
+MyType             TargetType         Name
+
+Collector          None               My Pool - htcondor-central-manager-253866
+DaemonMaster       None               htcondor-central-manager-2538661822-g3ngm
+Negotiator         None               htcondor-central-manager-2538661822-g3ngm
+Submitter          None               alahiff@htcondor-schedd-308862252-r6xkj
+Scheduler          None               htcondor-schedd-308862252-r6xkj
+DaemonMaster       None               htcondor-schedd-308862252-r6xkj
+DaemonMaster       None               htcondor-worker-123133369-tdb70
+Machine            Job                slot1@htcondor-worker-123133369-tdb70
+Machine            Job                slot2@htcondor-worker-123133369-tdb70
+```
