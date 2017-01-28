@@ -35,4 +35,5 @@ spec:
       volumes:
       - name: pool-password
         secret:
+          defaultMode: 0600
           secretName: htcondor-pool-password
