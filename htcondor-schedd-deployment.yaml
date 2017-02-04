@@ -17,13 +17,13 @@ spec:
         resources:
           requests:
             memory: "1.0Gi"
-            cpu: "500m"
+            cpu: "1000m"
           limits:
             memory: "1.0Gi"
-            cpu: "500m"
+            cpu: "1000m"
         env:
         - name: CONDOR_HOST
-          value: "htcondor-central-manager"
+          value: "htcondor-collector"
         - name: SEC_PASSWORD_FILE
           value: "/etc/condor/pool_password/password"
         volumeMounts:
@@ -32,6 +32,12 @@ spec:
         ports:
         - containerPort: 9618
           protocol: TCP
+        livenessProbe:
+          exec:
+            command:
+            - /usr/local/bin/htcondor-schedd-liveness
+          initialDelaySeconds: 10
+          periodSeconds: 30
       volumes:
       - name: pool-password
         secret:
