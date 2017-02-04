@@ -14,5 +14,7 @@ RUN yum -y install condor
 
 COPY condor_config.local /etc/condor/
 COPY schedd /etc/condor/config.d/
+COPY htcondor-schedd-liveness /usr/local/bin/
+
 COPY docker-entrypoint.sh /
 ENTRYPOINT ["/docker-entrypoint.sh"]
