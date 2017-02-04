@@ -1,3 +1,4 @@
 #!/bin/sh
-condor_status -direct `hostname -f` -schedd > /dev/null 2>&1
+MyAddress=`cat /var/lib/condor/spool/.schedd_address | grep addrs`
+condor_status -direct "$MyAddress" -schedd > /dev/null 2>&1
 exit $?
