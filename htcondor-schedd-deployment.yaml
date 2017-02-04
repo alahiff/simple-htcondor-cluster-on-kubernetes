@@ -23,7 +23,7 @@ spec:
             cpu: "1000m"
         env:
         - name: CONDOR_HOST
-          value: "htcondor-collector"
+          value: "htcondor-central-manager"
         - name: SEC_PASSWORD_FILE
           value: "/etc/condor/pool_password/password"
         volumeMounts:
