@@ -117,7 +117,7 @@ Machine            Job                slot2@htcondor-worker-123133369-tdb70
 ```
 
 ## Separated collector and negotiator
-Instead of having a single central manager pod, consisting of both a collector and negotiator, we can separate the central manager into two pods. Firstly we create a service for the collector, then create deployments for the collector and negotiator pods:
+Instead of having a single central manager pod, consisting of both a collector and negotiator, we can separate the central manager into two pods. After creating a pool passowrd as descibed above, we firstly create a service for the collector, then create deployments for the collector and negotiator pods:
 ```
 kubectl create -f v2/htcondor-collector-service.yaml
 kubectl create -f v2/htcondor-collector-deployment.yaml
