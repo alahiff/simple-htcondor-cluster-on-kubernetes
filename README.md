@@ -115,3 +115,46 @@ DaemonMaster       None               htcondor-worker-123133369-tdb70
 Machine            Job                slot1@htcondor-worker-123133369-tdb70
 Machine            Job                slot2@htcondor-worker-123133369-tdb70
 ```
+
+## Separated collector and negotiator
+Instead of having a single central manager pod, consisting of both a collector and negotiator, we can separate the central manager into two pods. Firstly we create a service for the collector, then create deployments for the collector and negotiator pods:
+```
+kubectl create -f v2/htcondor-collector-service.yaml
+kubectl create -f v2/htcondor-collector-deployment.yaml
+kubectl create -f v2/htcondor-negotiator-deployment.yaml
+```
+Now create a schedd and worker node:
+```
+kubectl create -f  v2/htcondor-schedd-deployment.yaml
+kubectl create -f  v2/htcondor-worker-deployment.yaml
+```
+You should see
+```
+kubectl get deployments,pods
+NAME                         DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
+deploy/htcondor-collector    1         1         1            1           1h
+deploy/htcondor-negotiator   1         1         1            1           1h
+deploy/htcondor-schedd       1         1         1            1           1h
+deploy/htcondor-worker       1         1         1            1           1h
+
+NAME                                      READY     STATUS    RESTARTS   AGE
+po/htcondor-collector-4216735924-d9nq5    1/1       Running   0          1h
+po/htcondor-negotiator-1710181096-1stkb   1/1       Running   0          1h
+po/htcondor-schedd-1411924804-9sdqr       1/1       Running   0          1h
+po/htcondor-worker-706141080-z5qld        1/1       Running   0          1h
+```
+and that all the expected HTCondor daemons are running:
+```
+kubectl exec htcondor-collector-4216735924-d9nq5 -i -t -- condor_status -any
+MyType             TargetType         Name
+
+Collector          None               My Pool - htcondor-collector-4216735924-d
+DaemonMaster       None               htcondor-collector-4216735924-d9nq5
+Negotiator         None               NEGOTIATOR
+DaemonMaster       None               htcondor-negotiator-1710181096-1stkb
+Scheduler          None               htcondor-schedd-1411924804-9sdqr
+DaemonMaster       None               htcondor-schedd-1411924804-9sdqr
+DaemonMaster       None               htcondor-worker-706141080-z5qld
+Machine            Job                slot1@htcondor-worker-706141080-z5qld
+Accounting         none               <none>
+```
