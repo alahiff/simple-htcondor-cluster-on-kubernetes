@@ -14,7 +14,6 @@ RUN yum -y install condor
 
 COPY condor_config.local /etc/condor/
 COPY negotiator /etc/condor/config.d
-COPY htcondor-negotiator-liveness /usr/local/bin/
 
 COPY docker-entrypoint.sh /
 ENTRYPOINT ["/docker-entrypoint.sh"]
