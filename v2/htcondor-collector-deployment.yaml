@@ -1,0 +1,45 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: htcondor-collector
+  name: htcondor-collector
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: htcondor-collector
+    spec:
+      containers:
+      - name: htcondor-collector
+        image: alahiff/htcondor-collector:latest
+        resources:
+          requests:
+            memory: "1.0Gi"
+            cpu: "1000m"
+          limits:
+            memory: "1.0Gi"
+            cpu: "1000m"
+        env:
+        - name: CONDOR_HOST
+          value: "htcondor-collector"
+        - name: SEC_PASSWORD_FILE
+          value: "/etc/condor/pool_password/password"
+        volumeMounts:
+          - name: pool-password
+            mountPath: /etc/condor/pool_password
+        ports:
+        - containerPort: 9618
+          protocol: TCP
+        livenessProbe:
+          exec:
+            command:
+            - /usr/local/bin/htcondor-collector-liveness
+          initialDelaySeconds: 10
+          periodSeconds: 30
+      volumes:
+      - name: pool-password
+        secret:
+          defaultMode: 0600
+          secretName: htcondor-pool-password

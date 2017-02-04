@@ -1,0 +1,39 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: htcondor-worker
+  name: htcondor-worker
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: htcondor-worker
+    spec:
+      containers:
+      - name: htcondor-worker
+        image: alahiff/htcondor-worker:latest
+        resources:
+          requests:
+            memory: "1.0Gi"
+            cpu: "500m"
+          limits:
+            memory: "1.0Gi"
+            cpu: "500m"
+        env:
+        - name: CONDOR_HOST
+          value: "htcondor-collector"
+        - name: SEC_PASSWORD_FILE
+          value: "/etc/condor/pool_password/password"
+        volumeMounts:
+          - name: pool-password
+            mountPath: /etc/condor/pool_password
+        ports:
+        - containerPort: 9618
+          protocol: TCP
+      volumes:
+      - name: pool-password
+        secret:
+          defaultMode: 0600
+          secretName: htcondor-pool-password
