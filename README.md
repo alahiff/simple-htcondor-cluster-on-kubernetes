@@ -143,7 +143,9 @@ po/htcondor-negotiator-1710181096-1stkb   1/1       Running   0          1h
 po/htcondor-schedd-1411924804-9sdqr       1/1       Running   0          1h
 po/htcondor-worker-706141080-z5qld        1/1       Running   0          1h
 ```
-and that all the expected HTCondor daemons are running:
+Note that there is no point scaling the number of collector pods with the configuration in use.
+
+We can also check that all the expected HTCondor daemons are running:
 ```
 kubectl exec htcondor-collector-4216735924-d9nq5 -i -t -- condor_status -any
 MyType             TargetType         Name
