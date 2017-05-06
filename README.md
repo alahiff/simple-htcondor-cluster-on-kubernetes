@@ -163,3 +163,8 @@ Accounting         none               <none>
 
 ## Auto-scaling the number of worker nodes
 A simple way to do this would be to use a horizontal pod autoscaler. The major problem with this is that downscaling will quite possibly result in worker nodes which are doing useful work being killed. As an alternative, instead of using a deployment (& hence a replicaset) for the worker nodes, we use a custom controller pod which can create worker node pods as they are required. Downscaling occurs just by letting existing running pods exit, with the assumption being that the worker node pods are configured to only allow new jobs to run for a limited time and then exit when idle.
+
+If a worker node deployment is running then delete it:
+```
+kubectl delete deployment htcondor-worker
+```
