@@ -168,3 +168,7 @@ If a worker node deployment is running then delete it:
 ```
 kubectl delete deployment htcondor-worker
 ```
+Now create the autoscaling pool of worker nodes:
+```
+kubectl create -f htcondor-worker-pool.yaml
+```
