@@ -160,3 +160,5 @@ DaemonMaster       None               htcondor-worker-706141080-z5qld
 Machine            Job                slot1@htcondor-worker-706141080-z5qld
 Accounting         none               <none>
 ```
+
+## Auto-scaling the number of worker nodes
