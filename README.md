@@ -162,3 +162,4 @@ Accounting         none               <none>
 ```
 
 ## Auto-scaling the number of worker nodes
+A simple way to do this would be to use a horizontal pod autoscaler. The major problem with this is that downscaling will quite possibly result in worker nodes which are doing useful work being killed.
