@@ -143,7 +143,7 @@ po/htcondor-negotiator-1710181096-1stkb   1/1       Running   0          1h
 po/htcondor-schedd-1411924804-9sdqr       1/1       Running   0          1h
 po/htcondor-worker-706141080-z5qld        1/1       Running   0          1h
 ```
-Note that there is no point scaling the number of collector pods with the configuration in use (this won't help with scaling or redunancy).
+Note that there is no point scaling the number of collector pods with the configuration in use (this won't help with scaling or redundancy).
 
 We can also check that all the expected HTCondor daemons are running:
 ```
