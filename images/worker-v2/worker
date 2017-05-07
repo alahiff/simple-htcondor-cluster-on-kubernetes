@@ -10,6 +10,9 @@ NUM_SLOTS_TYPE_1 = 1
 SLOT_TYPE_1 = cpus=100%,mem=100%,auto
 SLOT_TYPE_1_PARTITIONABLE = TRUE
 
+# Disable cgroups
+BASE_CGROUP =
+
 # Shutdown startd if idle for too long
 STARTD_NOCLAIM_SHUTDOWN = 600
 
