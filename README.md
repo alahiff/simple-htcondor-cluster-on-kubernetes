@@ -162,9 +162,9 @@ Accounting         none               <none>
 ```
 
 ## Autoscaling the number of worker nodes
-A simple way to do this would be to use a horizontal pod autoscaler. The major problem with this is that downscaling will quite possibly result in worker nodes which are doing useful work being killed. 
+A simple way to do this would be to use a horizontal pod autoscaler. The major problem with this is that downscaling will quite possibly result in worker nodes which are doing useful work being killed. As an alternative, one option is to use a custom controller pod which creates worker node pods as they are needed, i.e. depending on how many idle jobs there are. If the worker node pod is configured to only start new jobs for a limited time period and to exit after being idle for specified time, downscaling will occur naturally.
 
-Create a configmap 
+Firstly, create a ConfigMap containing the worker node pod template:
 ```
 kubectl create configmap htcondor-worker-pod-template --from-file=htcondor-worker.json
 ```
