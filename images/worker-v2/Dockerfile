@@ -15,3 +15,4 @@ RUN yum -y install condor
 COPY condor_config.local /etc/condor/
 COPY worker /etc/condor/config.d/
 COPY docker-entrypoint.sh /
+ENTRYPOINT ["/docker-entrypoint.sh"]
