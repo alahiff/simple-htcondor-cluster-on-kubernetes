@@ -16,5 +16,5 @@ STARTD_NOCLAIM_SHUTDOWN = 600
 # Shutdown the master if the startd exits
 MASTER.DAEMON_SHUTDOWN = (STARTD_StartTime =?= 0)
 
-# Only accept new jobs for 24 hours
+# Only start new jobs for 24 hours
 START = MonitorSelfAge < 2 * 24 * 60 * 60
