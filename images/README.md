@@ -1,5 +1,5 @@
 Images in this directory:
-* central-manager
+* central-manager: collector & negotiator in a single container
 * collector
 * generate-password
 * negotiator
