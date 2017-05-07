@@ -168,3 +168,9 @@ Firstly, create a ConfigMap containing the worker node pod template:
 ```
 kubectl create configmap htcondor-worker-pod-template --from-file=htcondor-worker.json
 ```
+If RBAC authorization is enabled, we meed to ensure that the controller pod has the appropriate permissions:
+```
+kubectl create -f serviceaccount-creator.yaml
+kubectl create -f role-pods.yaml
+kubectl create rolebinding pods-creator --clusterrole=pods-creator --serviceaccount=default:pod-creator --namespace=default
+```
