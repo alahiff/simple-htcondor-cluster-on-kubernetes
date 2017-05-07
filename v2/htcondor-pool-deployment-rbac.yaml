@@ -1,0 +1,55 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: htcondor-pool
+  name: htcondor-pool
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: htcondor-pool
+    spec:
+      containers:
+      - name: controller
+        image: alahiff/htcondor-pool:latest
+        imagePullPolicy: Always
+        env:
+        - name: HTCONDOR_LABEL_SELECTOR
+          value: "app=htcondor-worker"
+        - name: HTCONDOR_POD_TEMPLATE
+          value: "/etc/pool/htcondor-worker.json"
+        - name: HTCONDOR_MAX_WORKERS
+          value: "14"
+        - name: HTCONDOR_CPUS_PER_WORKER
+          value: "2"
+        - name: HTCONDOR_MAX_WORKERS_PER_CYCLE
+          value: "2"
+        - name: HTCONDOR_POD_NAME
+          value: "htcondor-worker"
+        - name: CONDOR_HOST
+          value: "htcondor-collector"
+        - name: SEC_PASSWORD_FILE
+          value: "/etc/condor/pool_password/password"
+        volumeMounts:
+         - name: pool-password
+           mountPath: /etc/condor/pool_password
+         - name: pod-template
+           mountPath: /etc/pool
+      - name: proxy
+        image: alahiff/kubectl:latest
+        imagePullPolicy: IfNotPresent
+        command:
+        - "/kubectl"
+        args:
+        - "proxy"
+      volumes:
+      - name: pod-template
+        configMap:
+          name: htcondor-worker-pod-template
+      - name: pool-password
+        secret:
+          defaultMode: 0600
+          secretName: htcondor-pool-password
+      serviceAccountName: pod-creator
