@@ -174,3 +174,11 @@ kubectl create -f serviceaccount-creator.yaml
 kubectl create -f role-pods.yaml
 kubectl create rolebinding pods-creator --clusterrole=pods-creator --serviceaccount=default:pod-creator --namespace=default
 ```
+Now we need to run the HTCondor pool controller pod. If RBAC is enabled run the following:
+```
+kubectl create -f htcondor-pool-deployment-rbac.yaml
+```
+or if not:
+```
+kubectl create -f htcondor-pool-deployment.yaml
+```
