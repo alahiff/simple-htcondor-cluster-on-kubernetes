@@ -1,0 +1,17 @@
+DAEMON_LIST = MASTER, STARTD
+
+# Disable preemption
+PREEMPT = FALSE
+RANK = 0
+
+# Partitionable slots
+NUM_SLOTS = 1
+NUM_SLOTS_TYPE_1 = 1
+SLOT_TYPE_1 = cpus=100%,mem=100%,auto
+SLOT_TYPE_1_PARTITIONABLE = TRUE
+
+# Shutdown startd if idle for too long
+STARTD_NOCLAIM_SHUTDOWN = 600
+
+# Shutdown the master if the startd exits
+MASTER.DAEMON_SHUTDOWN = (STARTD_StartTime =?= 0)
