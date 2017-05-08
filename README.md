@@ -182,3 +182,4 @@ or if not:
 ```
 kubectl create -f htcondor-pool-deployment.yaml
 ```
+If some jobs are submitted to the schedd, worker node pods will be created as needed.
